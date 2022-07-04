@@ -1,5 +1,5 @@
 Cmake_minimum_required(VERSION 2.8.3)
-project(tracik_planning)
+project(manipulator_planning)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -12,7 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   interactive_markers
   sensor_msgs
-  #baxter_core_msgs
   visualization_msgs
   trac_ik_lib
   eigen_conversions
@@ -42,21 +41,31 @@ include_directories(
    ${eigen_INCLUDE_DIRS}
 )
 
+# Build the ManipulatorIK library
+add_library(${PROJECT_NAME}
+    src/ManipulatorIK.cpp
+)
+add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
 
+## Add executable node
+add_executable(manipulator_planning_node
+    src/manipulator_planning_node.cpp
+)
+add_dependencies(manipulator_planning_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(manipulator_planning_node
+    ${PROJECT_NAME}
+)
 
-## build end_effector_marker_control
-add_executable(ik_tests_main
-    src/ik_tests.cpp
-    src/ik_tests_main.cpp
+# Test the inverse kinematic for arbitrary end-effector positions
+add_executable(ik_tests
+    test/ik_tests.cpp
+)
+add_dependencies(ik_tests ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ik_tests
+    ${PROJECT_NAME}
 )
 
 
-add_dependencies(ik_tests_main ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(ik_tests_main  
-  ${catkin_LIBRARIES}
-  )
-
-## build trac_ik_test.cpp
-# add_executable(end_effector_trac_ik_solver src/end_effector_trac_ik_solver.cpp)
-# target_link_libraries(end_effector_trac_ik_solver ${catkin_LIBRARIES})

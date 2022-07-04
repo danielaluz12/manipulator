@@ -1,6 +1,5 @@
 #include "tracik_planning/ik_tests.h"
 
-
 #include <boost/date_time.hpp>
 #include <trac_ik/trac_ik.hpp>
 #include <ros/ros.h>

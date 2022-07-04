@@ -1,11 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  
-	<!-- Launch arguments -->
-	<arg name="num_samples" default="1000" />
-	<arg name="chain_start" default="base_link" />
-	<arg name="chain_end" default="link_3" />
-	<arg name="timeout" default="0.005" />
 
 	<!-- Load robot description --> 
 	<include file="$(find manipulator_description)/launch/load.launch" />
@@ -15,19 +9,13 @@
 
 	<!-- Joint State Publisher -->
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
-	<rosparam param="source_list">["manipulator/joint_states"]</rosparam>
+		<rosparam param="source_list">["manipulator_planning/joint_states"]</rosparam>
 	</node>
 
 	<!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
 
-	<!-- Node for testing inverse kinematics -->
-	<node name="ik_tests" pkg="tracik_planning" type="ik_tests" output="screen">
-		<param name="num_samples" value="$(arg num_samples)"/>
-		<param name="chain_start" value="$(arg chain_start)"/>
-		<param name="chain_end" value="$(arg chain_end)"/>
-		<param name="timeout" value="$(arg timeout)"/>
-		<param name="urdf_param" value="/robot_description"/>
-	</node>
+	<!-- Node for testing inverse kinematics using the ManipulatorIK Class-->
+	<node name="ik_tests_class" pkg="manipulator_planning" type="ik_tests_class" output="screen"/>
 
 	<!-- RViz -->
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />
