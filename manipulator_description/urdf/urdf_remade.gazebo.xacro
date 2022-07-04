@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<robot name="manipulator_sim" xmlns:xacro="http://ros.org/wiki/xacro">  
+    
+    <transmission name="trans_joint_base_mancal">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_base_mancal">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint_base_mancal_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint_mancal_link1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_mancal_link1">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint_mancal_link1_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint_link1_link2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_link1_link2">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint_link1_link2_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint_link2_link3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_link2_link3">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint_link2_link3_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint_link3_gripper">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_link3_gripper">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint_link3_gripper_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_gripper_left_finger">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_left_finger">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="gripper_left_finger_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_gripper_right_finger">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_right_finger">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="gripper_right_finger_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+</robot>

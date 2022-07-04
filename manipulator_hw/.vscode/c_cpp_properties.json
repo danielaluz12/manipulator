@@ -1,0 +1,54 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/daniela/Workspaces/ws_moveit/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/opt/openrobots/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/beginner_tutorials/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/black_arm_common/blackarm_common/black_custom_hi/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/manipulator_common/custom_hi/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/fanuc/fanuc_driver/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/geometric_shapes/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/manipulator_common/manipulator_control/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit_resources/prbt_ikfast_manipulator_plugin/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_ros/benchmarks/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_ros/move_group/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_ros/robot_interaction/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_setup_assistant/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit_visual_tools/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/black_arm_common/blackarm_common/my_roscpp_library/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/black_arm_common/blackarm_common/normal_hi/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/open_manipulator/open_manipulator_control_gui/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/open_manipulator/open_manipulator_controller/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/open_manipulator/open_manipulator_libs/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/open_manipulator_planning/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/open_manipulator/open_manipulator_teleop/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/panda_planning/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_planners/pilz_industrial_motion_planner/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/moveit/moveit_planners/pilz_industrial_motion_planner_testutils/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/manipulator_common/planning/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/black_arm_common/blackarm_common/ros_control_boilerplate/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/rviz_visual_tools/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/trac_ik/trac_ik_kinematics_plugin/include/**",
+        "/home/daniela/Workspaces/ws_moveit/src/trac_ik/trac_ik_lib/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

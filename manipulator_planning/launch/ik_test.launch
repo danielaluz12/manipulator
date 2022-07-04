@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <arg name="num_samples" default="1000" />
+  <arg name="chain_start" default="base_link" />
+  <arg name="chain_end" default="link_3" />
+  <arg name="timeout" default="0.005" />
+
+ <include file="$(find little_arm_description)/launch/load.launch" />
+
+ <!-- Publish robot state (joints) as TF -->
+ <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+ <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <rosparam param="source_list">["manipulator/joint_states"]</rosparam>
+ </node>
+
+  <!-- <param name="robot_description" textfile="$(find urdf_remade)/urdf/urdf_remade.urdf"/> -->
+
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> -->
+
+  <!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
+
+  <node name="ik_tests" pkg="tracik_planning" type="ik_tests" output="screen">
+    <param name="num_samples" value="$(arg num_samples)"/>
+    <param name="chain_start" value="$(arg chain_start)"/>
+    <param name="chain_end" value="$(arg chain_end)"/>
+    <param name="timeout" value="$(arg timeout)"/>
+    <param name="urdf_param" value="/robot_description"/>
+  </node>
+
+
+  <node name="rviz"  pkg="rviz" type="rviz" args="-d $(find tracik_planning)/config/config.rviz" required="true" />
+
+</launch>

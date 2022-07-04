@@ -1,0 +1,7 @@
+<launch>
+
+  <!-- Run xacro script to generate and upload BlackArm description -->  
+  <param name="robot_description" command="$(find xacro)/xacro
+     $(find manipulator_description)/urdf/urdf_remade.urdf.xacro"/>
+  
+</launch>
