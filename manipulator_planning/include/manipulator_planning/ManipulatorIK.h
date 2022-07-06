@@ -17,7 +17,7 @@ class ManipulatorIK
 	public:
 
 		// Constructor
-		ManipulatorIK (ros::NodeHandle& nh)
+		ManipulatorIK (ros::NodeHandle& nh);
 
 		// Destructor
 		~ManipulatorIK() = default;
@@ -66,6 +66,7 @@ class ManipulatorIK
 		std::string urdf_param_;
 		int num_samples_;
 		double timeout_;
+
  
 };
 

@@ -59,6 +59,14 @@ target_link_libraries(manipulator_planning_node
     ${PROJECT_NAME}
 )
 
+add_executable(ik_tests_class
+    test/ik_tests_class.cpp
+)
+add_dependencies(ik_tests_class ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ik_tests_class
+    ${PROJECT_NAME}
+)
+
 # Test the inverse kinematic for arbitrary end-effector positions
 add_executable(ik_tests
     test/ik_tests.cpp

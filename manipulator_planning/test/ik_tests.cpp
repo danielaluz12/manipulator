@@ -1,4 +1,4 @@
-#include "tracik_planning/ik_tests.h"
+
 
 #include <boost/date_time.hpp>
 #include <trac_ik/trac_ik.hpp>
@@ -6,7 +6,6 @@
 #include <kdl/chainiksolverpos_nr_jl.hpp>
 #include <geometry_msgs/PoseStamped.h>
 #include <kdl_conversions/kdl_msg.h>
-// #include <baxter_core_msgs/JointCommand.h>
 #include <sensor_msgs/JointState.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -166,7 +165,7 @@ void callBack(const geometry_msgs::PoseStamped &callBackData) {
   int num_samples;
 
   nh.param("chain_start", chain_start, std::string("base_link"));
-  nh.param("chain_end", chain_end, std::string("air"));
+  nh.param("chain_end", chain_end, std::string("ee_center"));
   nh.param("urdf_param", urdf_param, std::string("/robot_description"));
   //nh.param("num_samples", num_samples, 1000);
   nh.param("timeout", timeout, 0.005);

@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 	ros::init(argc, argv, "manipulator_ik_test");
 	ros::NodeHandle nodeHandle;
 
-	ManipulatorIK robotIK (nodeHandle);
+	manipulator_ik::ManipulatorIK robotIK (nodeHandle);
 
 	ros::Rate loop_rate(500);
 	while (ros::ok()) {

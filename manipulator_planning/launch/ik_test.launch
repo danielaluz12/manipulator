@@ -4,7 +4,7 @@
 	<!-- Launch arguments -->
 	<arg name="num_samples" default="1000" />
 	<arg name="chain_start" default="base_link" />
-	<arg name="chain_end" default="link_3" />
+	<arg name="chain_end" default="ee_center" />
 	<arg name="timeout" default="0.005" />
 
 	<!-- Load robot description --> 
@@ -15,13 +15,13 @@
 
 	<!-- Joint State Publisher -->
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
-	<rosparam param="source_list">["manipulator/joint_states"]</rosparam>
+		<rosparam param="source_list">["manipulator/joint_states"]</rosparam>
 	</node>
 
 	<!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
 
 	<!-- Node for testing inverse kinematics -->
-	<node name="ik_tests" pkg="tracik_planning" type="ik_tests" output="screen">
+	<node name="ik_tests" pkg="manipulator_planning" type="ik_tests" output="screen">
 		<param name="num_samples" value="$(arg num_samples)"/>
 		<param name="chain_start" value="$(arg chain_start)"/>
 		<param name="chain_end" value="$(arg chain_end)"/>

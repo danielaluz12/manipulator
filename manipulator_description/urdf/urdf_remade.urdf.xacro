@@ -343,13 +343,13 @@
       velocity="2" />
   </joint>
 
-  <link name="air" />
+  <link name="ee_center" />
 
    <joint
-    name="joint_gripper_air"
+    name="joint_gripper_ee_center"
     type="fixed">
     <origin xyz="-0.06 0 0.03" rpy="0 0 0" />
     <parent link="gripper" />
-    <child link="air" />
+    <child link="ee_center" />
   </joint>
 </robot>

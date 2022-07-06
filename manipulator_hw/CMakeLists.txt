@@ -17,8 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
   control_msgs 
   urdf 
   std_msgs 
-  ros_control_boilerplate
-  rosserial_tivac
   my_roscpp_library
 )
 

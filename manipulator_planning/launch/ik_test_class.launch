@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
 
+	<!-- Load parameters --> 
+	<!-- <rosparam command="load" file="$(find manipulator_planning)/config/manipulator_planning.yaml" /> -->
+
 	<!-- Load robot description --> 
 	<include file="$(find manipulator_description)/launch/load.launch" />
 
@@ -14,8 +17,13 @@
 
 	<!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
 
+	<!-- rosparam -->
+	<rosparam file="$(find manipulator_planning)/config/manipulator_planning.yaml" command="load"/>
+
 	<!-- Node for testing inverse kinematics using the ManipulatorIK Class-->
 	<node name="ik_tests_class" pkg="manipulator_planning" type="ik_tests_class" output="screen"/>
+		
+
 
 	<!-- RViz -->
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />
