@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- Load parameters --> 
+	<rosparam file="$(find manipulator_planning)/config/manipulator_planning.yaml" command="load" />
+
+	<!-- Load controllers and hardware interface -->
+	<include file="$(find manipulator_hw)/launch/normal_hw_main.launch" />
+
+	<!-- Load robot description --> 
+	<include file="$(find manipulator_description)/launch/load.launch" />
+
+	<!-- Publish robot state (joints) as TF -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+	<!-- Joint State Publisher -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+	<!-- Node for generating end-effector positions -->
+	<include file="$(find manipulator_vision)/launch/manipulator_vision.launch" />
+
+	<!-- Node for computing inverse kinematics -->
+	<node name="manipulator_planning" pkg="manipulator_planning" type="manipulator_planning" output="screen"/>
+
+	<!-- RViz -->
+	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />
+
+</launch>

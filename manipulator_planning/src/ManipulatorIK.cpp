@@ -18,7 +18,7 @@ ManipulatorIK::ManipulatorIK(ros::NodeHandle& nh) {
 	nodeHandle_.getParam("/manipulator_planning/joints_names", jointNames_);
 
 	// Publishers
-	jointCommandPublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/manipulator_planning/desired_joint_positions", 100);
+	jointCommandPublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/arm_position_controller/command", 100); // Float???
 	jointStatePublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/manipulator_planning/joint_states", 100);
 
 	// Subscriber
@@ -28,19 +28,15 @@ ManipulatorIK::ManipulatorIK(ros::NodeHandle& nh) {
 	pointMarker_ = getSphereMarker ("base_link","gripper_pos", 0, 0.02, 1.0, 0.8, 0.4, 1.0);
 	pointMarkerPublisher_ = nodeHandle_.advertise<visualization_msgs::Marker>("/manipulator_planning/gripper_position_vis", 10);
 
-	std::cout <<chain_start_ << std::endl;
-	std::cout << chain_end_ << std::endl;
-	std::cout << timeout_ << std::endl;
-	std::cout << timeout_<< std::endl;
-
-	for (int i = 0; i < jointNames_.size(); ++i) {
-		// joint_msg.name.push_back(jointNames_);
-		std::cout << jointNames_[i] << std::endl;
-
-	}
-	
-
-
+//	std::cout << chain_start_ << std::endl;
+//	std::cout << chain_end_ << std::endl;
+//	std::cout << timeout_ << std::endl;
+//	std::cout << timeout_<< std::endl;
+//
+//	for (int i = 0; i < jointNames_.size(); ++i) {
+//		// joint_msg.name.push_back(jointNames_);
+//		std::cout << jointNames_[i] << std::endl;
+//	}
 }
 
 visualization_msgs::Marker ManipulatorIK::getSphereMarker(const std::string& frame_id, const std::string& ns, const int id, const double scale, const float red, const float green, const float blue, const float a){
@@ -99,8 +95,7 @@ void ManipulatorIK::publishJointCommand() {
 	jointStatePublisher_.publish(jointCommand_);   // visualization for testing!
 }
 
-
-sensor_msgs::JointState ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose){
+sensor_msgs::JointState ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
 	TRAC_IK::TRAC_IK tracik_solver(chain_start_, chain_end_, urdf_param_, timeout_, eps_);
 
 	KDL::Chain chain;
@@ -137,24 +132,16 @@ sensor_msgs::JointState ManipulatorIK::findIKSolution(const KDL::Frame &end_effe
 	ROS_INFO("Found %d solution", rc);
 
 	if (rc > 0) {
-			
-			jointNames_.resize(chain.getNrOfJoints());
-			//std::vector<std::string> jointNamesVector(chain.getNrOfJoints());
-			// std::cout << chain.getNrOfJoints() << std::endl;
-			// for( std::size_t j = 0; j < chain.getNrOfJoints(); ++j)
-			// 		jointNamesVector[j] = jointNamesArray[j];
 
-			jointCommand_.header.stamp = ros::Time::now();
-			jointCommand_.name = jointNames_;
-			jointCommand_.position.resize(chain.getNrOfJoints());
-			for( std::size_t j = 0; j < chain.getNrOfJoints(); ++j){
-					jointCommand_.position[j] = result(j);
-					printf("\n%f\n",result(j));
-			}
-			// The conversion has done, publishing the joint command
-			publishJointCommand();
+		jointNames_.resize(chain.getNrOfJoints());
 
-			return JointCommand_; 
+		jointCommand_.header.stamp = ros::Time::now();
+		jointCommand_.name = jointNames_;
+		jointCommand_.position.resize(chain.getNrOfJoints());
+		for( std::size_t j = 0; j < chain.getNrOfJoints(); ++j){
+				jointCommand_.position[j] = result(j);
+				printf("\n%f\n",result(j));
+		}
 	}
 
 }
@@ -165,7 +152,6 @@ void ManipulatorIK::desiredEEPosCallBack(const geometry_msgs::PoseStamped &msg) 
   tf::poseMsgToKDL(msg.pose, end_effector_pose);
 
   // Compute the IK Solution and publish the solution from within the method
-  
   findIKSolution(end_effector_pose);
   publishMarker(msg);
 

@@ -22,9 +22,7 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
 
-  <export>
-
-  </export>
+  <depend>message_generation</depend>
 
 </package>
 

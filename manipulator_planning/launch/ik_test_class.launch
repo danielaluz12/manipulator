@@ -22,8 +22,6 @@
 
 	<!-- Node for testing inverse kinematics using the ManipulatorIK Class-->
 	<node name="ik_tests_class" pkg="manipulator_planning" type="ik_tests_class" output="screen"/>
-		
-
 
 	<!-- RViz -->
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />

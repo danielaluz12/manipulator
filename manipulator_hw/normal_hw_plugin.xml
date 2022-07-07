@@ -1,0 +1,7 @@
+<library path="lib/libmanipulator_hw">
+  <class name="manipulator_hw/normalHW" type="normalHW" base_class_type="hardware_interface::RobotHW">
+    <description>
+       Manipulator hardware interface
+    </description>
+  </class>
+</library>

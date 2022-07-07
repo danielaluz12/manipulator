@@ -1,7 +1,6 @@
-
 #include "manipulator_hw/normal_hw.h"
 
-namespace myrobot_hw
+namespace manipulator_hw
 {
 
 normalHW::normalHW(){
@@ -14,84 +13,81 @@ normalHW::~normalHW(){
 
 bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
 {
-
-  
-  ROS_INFO("Initializing GPG3 hardware interface");
+  ROS_INFO("Initializing Manipulator hardware interface");
   
   nh_ = robot_hw_nh;
 
-  //get joint names and num of joint
-  nh_.getParam("joints", joint_name);
-  num_joints = joint_name.size();
+  // Get joint names and num of joint
+  nh_.getParam("joints", joint_names_);
+  num_joints_ = joint_names_.size();
 
-  //resize vectors
-  joint_position_state.resize(num_joints);
-  joint_velocity_state.resize(num_joints);
-  joint_effort_state.resize(num_joints);
-  joint_pos_command.resize(num_joints);
+  // Resize vectors
+  joint_position_state_.resize(num_joints_);
+  joint_velocity_state_.resize(num_joints_);
+  joint_effort_state_.resize(num_joints_);
+  joint_pos_command_.resize(num_joints_);
 
-  //Register handles
-    for(int i=0; i<num_joints; i++){
+  // Register handles
+    for(int i = 0; i < num_joints_; i++) {
         //State
-        hardware_interface::JointStateHandle jointStateHandle(joint_name[i], &joint_position_state[i], &joint_velocity_state[i], &joint_effort_state[i]);
-        joint_state_interface.registerHandle(jointStateHandle);
+        hardware_interface::JointStateHandle jointStateHandle(joint_names_[i], &joint_position_state_[i], &joint_velocity_state_[i], &joint_effort_state_[i]);
+        joint_state_interface_.registerHandle(jointStateHandle);
 
         //Command
-        hardware_interface::JointHandle JointHandle(jointStateHandle, &joint_pos_command[i]);
-        joint_pos_interface.registerHandle(JointHandle);
+        hardware_interface::JointHandle JointHandle(jointStateHandle, &joint_pos_command_[i]);
+        joint_pos_interface_.registerHandle(JointHandle);
     }
   
-  //Register interfaces
+  // Register interfaces
   registerInterface(&joint_state_interface);
   registerInterface(&joint_pos_interface);
 
+  raspberry_sub_ = root_nh.subscribe("/manipulator/raspberry/joint_states", 100, &normalHW::raspberryDataCallback, this);
+  raspberry_pub_ = root_nh.advertise<sensor_msgs::JointState>("/manipulator/raspberry/joint_command", 100);
 
   return true;
 }
 
+void normalHW::raspberryDataCallback (const sensor_msgs::JointState &msg) {
+	raspberry_state_msg_ = msg;
+}
+
 void normalHW::read(const ros::Time &time, const ros::Duration &period)
 {
-    //read in rad 
-    // serial.ReadPack(rmsg);  
 
-    // pos_[0] = rmsg[0]* 0.01 -3; //pulse to rad
-    // pos_[1] = rmsg[1]* 0.006 -1.2; //pulse to rad
-    // pos_[2] = rmsg[2]* 0.007 -1.4; //pulse to rad
-    // pos_[3] = rmsg[3]* 0.0157 -6.28; //pulse to rad
-    // pos_[4] =  rmsg[4]* 0.0026 -0.52;
-    // pos_[5] =  rmsg[5]* (-0.0026) +0.52; 
-
+	// Using data from RaspberryPi
+	for (int i = 0; i < num_joints_; i++) {
+		//joint_position_state_[i] = raspberry_state_msg_.position[i]; // with raspberry
+		joint_position_state_[i] = joint_pos_command_[i]; // without raspberry
+		joint_velocity_state_[i] = 0;
+		joint_effort_state_[i] = 0;
+	}
     
-    // std::cout << " joint_position : ";
-    // for (int i = 0; i < 6; i++) {
-    //         std::cout << pos_[i] << " ";
-    // }
-    // std::cout << "\n" << std::endl; 
+	// Print for debug
+	std::cout << "[Manipulator HW] Joint_positions: ";
+	for (int i = 0; i < num_joints_; i++) {
+		 std::cout << joint_position_state_[i] << " ";
+	}
+	std::cout << "\n" << std::endl;
 
-     
 }
 
 void normalHW::write(const ros::Time &time, const ros::Duration &period)
 {
-    //send in rad also
-    // cmd_2[0]=int(cmd_[0]*100.0 + 300.0);  //j_base_mancal
-    // cmd_2[1]=int(cmd_[1]*166.666 + 200.0); //j_mancal_elo1
-    // cmd_2[2]=int(cmd_[2]*142.857 +200.0); // j_elo1_elo2
-    // cmd_2[3]=int(cmd_[3]*63.694 + 399.999); // por mais  duas joint
-    // cmd_2[4]=int(cmd_[4]*384.615+ 200.0);
-    // cmd_2[5]=int(cmd_[5]*(-384.615)+ 200.0);
+	sensor_msgs::JointState cmd;
 
+	cmd.header.stamp = ros::Time::now();
 
-    // serial.SendPack(cmd_2);
+	for (int i = 0; i < num_joints_; ++i) {
+		cmd.name.push_back(joint_names_[i]);
+		cmd.position.push_back(joint_pos_command_[i]);
+		cmd.velocity.push_back(0.0);
+		cmd.effort.push_back(0.0);
+	}
 
-    // std::cout << "joint command ";
-    // for (int i = 0; i < 6; i++) {
-    //         std::cout << cmd_[i] << " ";
-    // }
-    // std::cout << "\n" << std::endl; 
-
-  
+	raspberry_pub_.publish(cmd);
 }
 
 }
-// PLUGINLIB_EXPORT_CLASS(myrobot_hw::normalHW, hardware_interface::RobotHW)
+
+PLUGINLIB_EXPORT_CLASS(manipulator_hw::normalHW, hardware_interface::RobotHW)
