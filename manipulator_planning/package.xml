@@ -31,5 +31,9 @@
   <exec_depend>visualization_msgs</exec_depend>
 
   <buildtool_depend>catkin</buildtool_depend>
-
+  
+  <depend>manipulator_vision</depend>
+  <depend>manipulator_hw</depend>
+  <depend>manipulator_description</depend>
+  
 </package>

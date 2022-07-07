@@ -1,4 +1,5 @@
 #include "manipulator_hw/normal_hw.h"
+#include <pluginlib/class_list_macros.h>
 
 namespace manipulator_hw
 {
@@ -18,8 +19,22 @@ bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
   nh_ = robot_hw_nh;
 
   // Get joint names and num of joint
-  nh_.getParam("joints", joint_names_);
+  nh_.getParam("/hardware_interface/joints", joint_names_);
   num_joints_ = joint_names_.size();
+  
+  // get joint names
+  // if (!nh_.getParam("joints", joint_names_))
+  // {
+  //     ROS_ERROR("No joints given in the namespace: %s.", nh_.getNamespace().c_str());
+  //     return false;
+  // }
+
+	// Print for debug
+	std::cout << "[Manipulator HW] Joint names: ";
+	for (int i = 0; i < num_joints_; i++) {
+	 	 std::cout << joint_names_[i] << " ";
+	}
+	std::cout << "\n" << std::endl;
 
   // Resize vectors
   joint_position_state_.resize(num_joints_);
@@ -39,8 +54,8 @@ bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
     }
   
   // Register interfaces
-  registerInterface(&joint_state_interface);
-  registerInterface(&joint_pos_interface);
+  registerInterface(&joint_state_interface_);
+  registerInterface(&joint_pos_interface_);
 
   raspberry_sub_ = root_nh.subscribe("/manipulator/raspberry/joint_states", 100, &normalHW::raspberryDataCallback, this);
   raspberry_pub_ = root_nh.advertise<sensor_msgs::JointState>("/manipulator/raspberry/joint_command", 100);
@@ -64,11 +79,11 @@ void normalHW::read(const ros::Time &time, const ros::Duration &period)
 	}
     
 	// Print for debug
-	std::cout << "[Manipulator HW] Joint_positions: ";
-	for (int i = 0; i < num_joints_; i++) {
-		 std::cout << joint_position_state_[i] << " ";
-	}
-	std::cout << "\n" << std::endl;
+	// std::cout << "[Manipulator HW] Joint_positions: ";
+	// for (int i = 0; i < num_joints_; i++) {
+	// 	 std::cout << joint_position_state_[i] << " ";
+	// }
+	// std::cout << "\n" << std::endl;
 
 }
 

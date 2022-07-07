@@ -1,14 +1,14 @@
 <launch>
    
    <!-- Load controller settings  -->
-   <rosparam file="$(find manipulator_hw)/config/controllers.yaml" command="load"/>
+   <rosparam file="$(find manipulator_hw)/config/controllers.yaml"  command="load" />
 
    <!-- Load hardware interface -->
-   <node name="normal_hw_main" pkg="manipulator_hw" type="normal_hw_main" output="screen"/> 
+   <node name="normal_hw_main" pkg="manipulator_hw" type="node" output="screen" /> 
 
    <!-- Load controller manager  -->
    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
-   output="screen" args="joint_state_controller arm_position_controller"/> 
+   output="screen" args="joint_state_controller arm_position_controller" /> 
 
 
 </launch>

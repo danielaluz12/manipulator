@@ -54,7 +54,7 @@ target_link_libraries(${PROJECT_NAME}
 add_executable(manipulator_planning_node
     src/manipulator_planning_node.cpp
 )
-add_dependencies(manipulator_planning_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(manipulator_planning_node ${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(manipulator_planning_node
     ${PROJECT_NAME}
 )

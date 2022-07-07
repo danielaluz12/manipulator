@@ -1,3 +1,12 @@
+# Settings for ros_control hardware interface 
+hardware_interface:
+  joints:
+    - joint_base_mancal
+    - joint_mancal_link1
+    - joint_link1_link2
+    - joint_link2_link3
+    - joint_link3_gripper
+
 joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 500

@@ -20,7 +20,7 @@
 	<include file="$(find manipulator_vision)/launch/manipulator_vision.launch" />
 
 	<!-- Node for computing inverse kinematics -->
-	<node name="manipulator_planning" pkg="manipulator_planning" type="manipulator_planning" output="screen"/>
+	<node name="manipulator_planning_node" pkg="manipulator_planning" type="manipulator_planning_node" output="screen"/>
 
 	<!-- RViz -->
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />

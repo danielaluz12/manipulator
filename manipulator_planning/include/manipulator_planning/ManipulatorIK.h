@@ -23,7 +23,7 @@ class ManipulatorIK
 		~ManipulatorIK() = default;
 
 		// Compute the inverse kinematics
-		sensor_msgs::JointState findIKSolution(const KDL::Frame &end_effector_pose);
+		void findIKSolution(const KDL::Frame &end_effector_pose);
 
 		// Publish joint command
 		void publishJointCommand ();

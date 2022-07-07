@@ -3,7 +3,7 @@
 int main(int argc, char** argv)
 {
 	// Init ROS node
-	ros::init(argc, argv, "manipulator_planning");
+	ros::init(argc, argv, "manipulator_planning_node");
 	ros::NodeHandle nodeHandle;
 
 	manipulator_ik::ManipulatorIK robotIK(nodeHandle);

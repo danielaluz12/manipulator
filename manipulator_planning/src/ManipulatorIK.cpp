@@ -18,7 +18,7 @@ ManipulatorIK::ManipulatorIK(ros::NodeHandle& nh) {
 	nodeHandle_.getParam("/manipulator_planning/joints_names", jointNames_);
 
 	// Publishers
-	jointCommandPublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/arm_position_controller/command", 100); // Float???
+	// jointCommandPublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/arm_position_controller/command", 100); // Float???
 	jointStatePublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/manipulator_planning/joint_states", 100);
 
 	// Subscriber
@@ -91,11 +91,11 @@ sensor_msgs::JointState ManipulatorIK::jointAnglesConverter (const std::vector<d
 
 void ManipulatorIK::publishJointCommand() {
 
-	jointCommandPublisher_.publish(jointCommand_);
+	// jointCommandPublisher_.publish(jointCommand_);
 	jointStatePublisher_.publish(jointCommand_);   // visualization for testing!
 }
 
-sensor_msgs::JointState ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
+void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
 	TRAC_IK::TRAC_IK tracik_solver(chain_start_, chain_end_, urdf_param_, timeout_, eps_);
 
 	KDL::Chain chain;
