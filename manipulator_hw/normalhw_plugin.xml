@@ -1,6 +1,6 @@
 
 <library path="lib/libnormal_hi">
-  <class name="normal_hi/normalHW" type="normalHW" base_class_type="hardware_interface::RobotHW">
+  <class name="myrobot_hw/normalHW" type="normalHW" base_class_type="hardware_interface::RobotHW">
     <description>
        little arm hardware interface
     </description>

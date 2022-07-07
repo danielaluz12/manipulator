@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>normal_hi</name>
+  <name>manipulator_hw</name>
   <version>0.0.0</version>
-  <description>The normal_hi package</description>
+  <description>The manipulator_hw package</description>
 
   <maintainer email="daniela@todo.todo">daniela</maintainer>
 
@@ -42,19 +42,9 @@
   <build_depend>message_generation</build_depend>
   <build_export_depend>message_generation</build_export_depend>
   <exec_depend>message_runtime</exec_depend>
-  <build_depend>ros_control_boilerplate</build_depend>
-
-  <build_depend>rosserial_tivac</build_depend> 
-  <exec_depend>rosserial_tivac</exec_depend>
-
-  <build_export_depend>ros_control_boilerplate</build_export_depend>
 
   <exec_depend>message_generation</exec_depend>
-  <exec_depend>ros_control_boilerplate</exec_depend>
 
-  <build_depend>moveit_ros_planning_interface</build_depend>
-  <build_export_depend>moveit_ros_planning_interface</build_export_depend>
-  <exec_depend>moveit_ros_planning_interface</exec_depend>
   <depend>my_roscpp_library</depend>
 
 

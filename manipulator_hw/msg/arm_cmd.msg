@@ -1,1 +1,0 @@
-int64[6] angle_cmd #deg

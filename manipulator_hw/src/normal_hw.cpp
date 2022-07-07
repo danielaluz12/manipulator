@@ -1,10 +1,16 @@
 
+#include "manipulator_hw/normal_hw.h"
 
-#include "my_roscpp_library/my_serial_library.h"
-#include "normal_hi/normal_hw.h"
-
-namespace myrobots_hardware_interface
+namespace myrobot_hw
 {
+
+normalHW::normalHW(){
+
+}
+
+normalHW::~normalHW(){
+
+}
 
 bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
 {
@@ -86,5 +92,6 @@ void normalHW::write(const ros::Time &time, const ros::Duration &period)
 
   
 }
+
 }
-PLUGINLIB_EXPORT_CLASS(normalHW, hardware_interface::RobotHW)
+// PLUGINLIB_EXPORT_CLASS(myrobot_hw::normalHW, hardware_interface::RobotHW)

@@ -17,12 +17,6 @@ ManipulatorIK::ManipulatorIK(ros::NodeHandle& nh) {
 	nodeHandle_.getParam("/manipulator_planning/num_samples", num_samples_);
 	nodeHandle_.getParam("/manipulator_planning/joints_names", jointNames_);
 
-	// nh.param("chain_start", chain_start_, std::string("base_link"));
-  // nh.param("chain_end", chain_end_, std::string("ee_center"));
-  // nh.param("urdf_param", urdf_param_, std::string("/robot_description"));
-  // //nh.param("num_samples", num_samples, 1000);
-  // nh.param("timeout", timeout_, 0.005);
-	
 	// Publishers
 	jointCommandPublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/manipulator_planning/desired_joint_positions", 100);
 	jointStatePublisher_ = nodeHandle_.advertise<sensor_msgs::JointState>("/manipulator_planning/joint_states", 100);
@@ -106,7 +100,7 @@ void ManipulatorIK::publishJointCommand() {
 }
 
 
-void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose){
+sensor_msgs::JointState ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose){
 	TRAC_IK::TRAC_IK tracik_solver(chain_start_, chain_end_, urdf_param_, timeout_, eps_);
 
 	KDL::Chain chain;
@@ -159,6 +153,8 @@ void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose){
 			}
 			// The conversion has done, publishing the joint command
 			publishJointCommand();
+
+			return JointCommand_; 
 	}
 
 }
