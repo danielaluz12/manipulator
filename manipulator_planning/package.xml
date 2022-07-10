@@ -35,5 +35,6 @@
   <depend>manipulator_vision</depend>
   <depend>manipulator_hw</depend>
   <depend>manipulator_description</depend>
+  <depend>trajectory_msgs</depend>
   
 </package>

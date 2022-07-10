@@ -10,14 +10,14 @@
 namespace manipulator_hw
 {
 
-class normalHW : public hardware_interface::RobotHW
+class manipulatorHW : public hardware_interface::RobotHW
 {
   public:
     // Constructor
-    normalHW();
+    manipulatorHW();
 
     // Destructor
-    ~normalHW();
+    ~manipulatorHW();
 
     bool init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh);
     void read(const ros::Time & time, const ros::Duration &period);

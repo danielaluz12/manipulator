@@ -26,4 +26,8 @@
 	<!-- RViz -->
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />
 
+	<!-- incluir nó manipulator vision e testar cinematica inversa -->
+	<!-- Node for generating end-effector positions -->
+	<include file="$(find manipulator_vision)/launch/manipulator_vision.launch" />
+
 </launch>

@@ -41,7 +41,7 @@
 
   <export>
     <!-- Other tools can request additional information be placed here -->
-    <hardware_interface plugin="${prefix}/normal_hw_plugin.xml"/>
+    <hardware_interface plugin="${prefix}/manipulator_hw_plugin.xml"/>
   </export>
 
 

@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   eigen_conversions
   kdl_conversions
   visualization_msgs
+  trajectory_msgs
 )
 
 catkin_package(

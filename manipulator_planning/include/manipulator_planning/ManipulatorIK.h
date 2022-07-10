@@ -9,6 +9,7 @@
 #include <kdl_conversions/kdl_msg.h>
 #include <sensor_msgs/JointState.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <trajectory_msgs/JointTrajectory.h>
 
 namespace manipulator_ik {
 
@@ -27,6 +28,7 @@ class ManipulatorIK
 
 		// Publish joint command
 		void publishJointCommand ();
+		// void convertCommandCM();
 
 	private:
 
@@ -44,7 +46,11 @@ class ManipulatorIK
 
 		// Publishs joint command from the inverse kinematics
 		sensor_msgs::JointState jointCommand_;
+		trajectory_msgs::JointTrajectory jointCommandCM_;
+
 		ros::Publisher jointCommandPublisher_;
+		ros::Publisher jointCommandCMPublisher_;
+
 		
 		// Converts joint angles' vector in a joint message
 		sensor_msgs::JointState jointAnglesConverter (const std::vector<double> &joint_angles);

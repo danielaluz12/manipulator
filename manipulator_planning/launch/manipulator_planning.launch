@@ -5,7 +5,7 @@
 	<rosparam file="$(find manipulator_planning)/config/manipulator_planning.yaml" command="load" />
 
 	<!-- Load controllers and hardware interface -->
-	<include file="$(find manipulator_hw)/launch/normal_hw_main.launch" />
+	<include file="$(find manipulator_hw)/launch/manipulator_hw.launch" />
 
 	<!-- Load robot description --> 
 	<include file="$(find manipulator_description)/launch/load.launch" />

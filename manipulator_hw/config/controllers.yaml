@@ -1,21 +1,75 @@
-# Settings for ros_control hardware interface 
-hardware_interface:
-  joints:
-    - joint_base_mancal
-    - joint_mancal_link1
-    - joint_link1_link2
-    - joint_link2_link3
-    - joint_link3_gripper
+# #  ros_control_boilerplate Settings -----------------------
+# # Settings for ros_control control loop
 
+# generic_hw_control_loop:
+#   loop_hz: 200 # 250 to emulate serial pause COMMAND_PERIOD 0.0055 , SERIAL_PAUSE 0.004
+#   cycle_time_error_threshold: 0.1
+
+# Settings for ros_control hardware interface (used in generic_hw_interface.cpp)
+hardware_interface:
+    joints:
+      - joint_base_mancal
+      - joint_mancal_link1
+      - joint_link1_link2
+      - joint_link2_link3
+      - joint_link3_gripper
+  
 joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 500
 
 arm_position_controller:
-  type: position_controllers/JointPositionController
+  type: position_controllers/JointTrajectoryController
   joints:
     - joint_base_mancal
     - joint_mancal_link1
     - joint_link1_link2
     - joint_link2_link3
     - joint_link3_gripper
+  gains:
+    joint_base_mancal:
+      p: 1000.0
+      d: 1000.0
+      i: 0.0
+      i_clamp: 1.0
+    joint_mancal_link1:
+      p: 1000.0
+      d: 1000.0
+      i: 0.0
+      i_clamp: 1.0
+    joint_link1_link2:
+      p: 10000.0
+      d: 10000.0
+      i: 0.0
+      i_clamp: 1.0
+    joint_link2_link3:
+      p: 10000.0
+      d: 10000.0
+      i: 0.0
+      i_clamp: 1.0
+    joint_link3_gripper:
+      p: 10000.0
+      d: 10000.0
+      i: 0.0
+      i_clamp: 1.0
+
+
+# controller_list:
+#   - name: arm_position_controller
+#     action_ns: follow_joint_trajectory
+#     type: FollowJointTrajectory
+#     default: True
+#     joints:
+#       - joint_base_mancal
+#       - joint_mancal_link1
+#       - joint_link1_link2
+#       - joint_link2_link3
+#       - joint_link3_gripper
+#   - name: hand_position_controller
+#     action_ns: follow_joint_trajectory
+#     type: FollowJointTrajectory
+#     default: True
+#     joints:
+#       - gripper_left_finger
+#       - gripper_right_finger
+

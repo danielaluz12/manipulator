@@ -1,18 +1,18 @@
-#include "manipulator_hw/normal_hw.h"
+#include "manipulator_hw/manipulator_hw.h"
 #include <pluginlib/class_list_macros.h>
 
 namespace manipulator_hw
 {
 
-normalHW::normalHW(){
+manipulatorHW::manipulatorHW(){
 
 }
 
-normalHW::~normalHW(){
+manipulatorHW::~manipulatorHW(){
 
 }
 
-bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
+bool manipulatorHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
 {
   ROS_INFO("Initializing Manipulator hardware interface");
   
@@ -57,17 +57,17 @@ bool normalHW::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
   registerInterface(&joint_state_interface_);
   registerInterface(&joint_pos_interface_);
 
-  raspberry_sub_ = root_nh.subscribe("/manipulator/raspberry/joint_states", 100, &normalHW::raspberryDataCallback, this);
+  raspberry_sub_ = root_nh.subscribe("/manipulator/raspberry/joint_states", 100, &manipulatorHW::raspberryDataCallback, this);
   raspberry_pub_ = root_nh.advertise<sensor_msgs::JointState>("/manipulator/raspberry/joint_command", 100);
 
   return true;
 }
 
-void normalHW::raspberryDataCallback (const sensor_msgs::JointState &msg) {
+void manipulatorHW::raspberryDataCallback (const sensor_msgs::JointState &msg) {
 	raspberry_state_msg_ = msg;
 }
 
-void normalHW::read(const ros::Time &time, const ros::Duration &period)
+void manipulatorHW::read(const ros::Time &time, const ros::Duration &period)
 {
 
 	// Using data from RaspberryPi
@@ -87,7 +87,7 @@ void normalHW::read(const ros::Time &time, const ros::Duration &period)
 
 }
 
-void normalHW::write(const ros::Time &time, const ros::Duration &period)
+void manipulatorHW::write(const ros::Time &time, const ros::Duration &period)
 {
 	sensor_msgs::JointState cmd;
 
@@ -105,4 +105,4 @@ void normalHW::write(const ros::Time &time, const ros::Duration &period)
 
 }
 
-PLUGINLIB_EXPORT_CLASS(manipulator_hw::normalHW, hardware_interface::RobotHW)
+PLUGINLIB_EXPORT_CLASS(manipulator_hw::manipulatorHW, hardware_interface::RobotHW)

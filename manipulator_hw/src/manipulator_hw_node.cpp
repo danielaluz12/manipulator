@@ -1,4 +1,4 @@
-#include "manipulator_hw/normal_hw.h"
+#include "manipulator_hw/manipulator_hw.h"
 #include <iostream>
 #include <ros/ros.h>
 #include <controller_manager/controller_manager.h>
@@ -6,12 +6,12 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "normal_hw_main");
+  ros::init(argc, argv, "manipulator_hw_node");
   ros::NodeHandle nh;
 
   ROS_INFO("Initializing Manipulator hw node");
 
-  manipulator_hw::normalHW robot;
+  manipulator_hw::manipulatorHW robot;
   if (!robot.init(nh, nh))
   {
     ROS_FATAL("Manipulator initialization failed");
