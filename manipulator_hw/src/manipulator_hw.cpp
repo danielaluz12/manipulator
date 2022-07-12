@@ -71,12 +71,15 @@ void manipulatorHW::read(const ros::Time &time, const ros::Duration &period)
 {
 
 	// Using data from RaspberryPi
+  // std::cout << "joint_pos_command_ = [";
 	for (int i = 0; i < num_joints_; i++) {
+    // std::cout << joint_pos_command_[i] << ", ";
 		//joint_position_state_[i] = raspberry_state_msg_.position[i]; // with raspberry
 		joint_position_state_[i] = joint_pos_command_[i]; // without raspberry
 		joint_velocity_state_[i] = 0;
 		joint_effort_state_[i] = 0;
 	}
+  // std::cout << "]" << std::endl;
     
 	// Print for debug
 	// std::cout << "[Manipulator HW] Joint_positions: ";

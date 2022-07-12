@@ -4,7 +4,7 @@
    <rosparam file="$(find manipulator_hw)/config/controllers.yaml"  command="load" />
 
    <!-- Load hardware interface -->
-   <node name="normal_hw_main" pkg="manipulator_hw" type="node" output="screen" /> 
+   <node name="manipulator_hw_node" pkg="manipulator_hw" type="node" output="screen" /> 
 
    <!-- Load controller manager  -->
    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 

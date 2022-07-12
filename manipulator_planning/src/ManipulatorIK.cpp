@@ -15,7 +15,13 @@ ManipulatorIK::ManipulatorIK(ros::NodeHandle& nh) {
 	nodeHandle_.getParam("/manipulator_planning/chain_end", chain_end_);
 	nodeHandle_.getParam("/manipulator_planning/timeout", timeout_);
 	nodeHandle_.getParam("/manipulator_planning/num_samples", num_samples_);
-	nodeHandle_.getParam("/manipulator_planning/joints_names", jointNames_);
+	nodeHandle_.getParam("/manipulator_planning/joints", jointNames_);
+
+	std::cout << "[Manipulator IK] Joint Names:" << std::endl;
+	for (int i = 0; i < jointNames_.size(); ++i) {
+		std::cout << jointNames_[i] << ", ";
+	}
+	std::cout << std::endl;
 
 	// Publishers
 	jointCommandCMPublisher_ = nodeHandle_.advertise<trajectory_msgs::JointTrajectory>("/arm_position_controller/command", 100);
@@ -143,7 +149,7 @@ void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
 
 		jointNames_.resize(chain.getNrOfJoints());
 
-		// jointCommand_.header.stamp = ros::Time::now();
+		jointCommand_.header.stamp = ros::Time::now();
 
 		// // jointCommand_.name = jointNames_;
 		// jointCommand_.name.push_back("joint_base_mancal");
@@ -152,19 +158,23 @@ void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
     // jointCommand_.name.push_back("joint_link2_link3");
     // jointCommand_.name.push_back("joint_link3_gripper");
 
+		std::cout << "[Manipulator IK] IK result: ";
 		jointCommand_.position.resize(chain.getNrOfJoints());
 		for( std::size_t j = 0; j < chain.getNrOfJoints(); ++j){
+				jointCommand_.name.push_back(jointNames_[j]);
 				jointCommand_.position[j] = result(j);
+				std::cout << result(j) << ", ";
 				// printf("\n%f\n",jointCommand_.position[j]);
 		}
+			std::cout << std::endl;
 
 		// jointCommandCM_.joint_names= jointCommand_.name;
 		jointCommandCM_.header.stamp = ros::Time::now();
-		jointCommandCM_.joint_names.push_back("joint_base_mancal");
-    jointCommandCM_.joint_names.push_back("joint_mancal_link1");
-    jointCommandCM_.joint_names.push_back("joint_link1_link2");
-    jointCommandCM_.joint_names.push_back("joint_link2_link3");
-    jointCommandCM_.joint_names.push_back("joint_link3_gripper");
+		// jointCommandCM_.joint_names.push_back("joint_base_mancal");
+    // jointCommandCM_.joint_names.push_back("joint_mancal_link1");
+    // jointCommandCM_.joint_names.push_back("joint_link1_link2");
+    // jointCommandCM_.joint_names.push_back("joint_link2_link3");
+    // jointCommandCM_.joint_names.push_back("joint_link3_gripper");
 
 
     // We will have two waypoints in this goal trajectory
@@ -174,6 +184,7 @@ void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
     // Positions
     int ind = 0;
 		for( std::size_t j = 0; j < 5; ++j){
+				jointCommandCM_.joint_names.push_back(jointNames_[j]);
 				jointCommandCM_.points[ind].positions.resize(5);
 				jointCommandCM_.points[ind].positions[j] = 0.0;
 		}
@@ -207,58 +218,9 @@ void ManipulatorIK::findIKSolution(const KDL::Frame &end_effector_pose) {
 
 	}
 
+	jointCommandCMPublisher_.publish(jointCommandCM_);
+
 }
-
-// void ManipulatorIK::convertCommandCM(){
-
-// 		jointCommandCM_.joint_names= jointNames_;
-// 		jointCommandCM_.header.stamp = ros::Time::now();
-//     // goal.trajectory.joint_names.push_back("r_shoulder_lift_joint");
-//     // goal.trajectory.joint_names.push_back("r_upper_arm_roll_joint");
-//     // goal.trajectory.joint_names.push_back("r_elbow_flex_joint");
-//     // goal.trajectory.joint_names.push_back("r_forearm_roll_joint");
-//     // goal.trajectory.joint_names.push_back("r_wrist_flex_joint");
-//     // goal.trajectory.joint_names.push_back("r_wrist_roll_joint");
-
-//     // We will have two waypoints in this goal trajectory
-//     jointCommandCM_.points.resize(2);
-
-//     // First trajectory point
-//     // Positions
-//     int ind = 0;
-// 		for( std::size_t j = 0; j < 5; ++j){
-// 				jointCommandCM_.points[ind].positions.resize(5);
-// 				jointCommandCM_.points[ind].positions[j] = 0.0;
-// 		}
-   
-//     // Velocities
-//     jointCommandCM_.points[ind].velocities.resize(5);
-//     for (size_t j = 0; j < 5; ++j)
-//     {
-//       jointCommandCM_.points[ind].velocities[j] = 0.0;
-//     }
-//     // To be reached 1 second after starting along the trajectory
-//     jointCommandCM_.points[ind].time_from_start = ros::Duration(1.0);
-
-//     // Second trajectory point
-//     // Positions
-//     ind += 1;
-// 		for( std::size_t j = 0; j < 5; ++j){
-// 				jointCommandCM_.points[ind].positions.resize(5);
-// 				jointCommandCM_.points[ind].positions[j] = jointCommand_.position[j];
-// 				// printf("\n%f\n",jointCommandCM_.points[ind].positions[j]);
-// 		}
-    
-//     // Velocities
-//     jointCommandCM_.points[ind].velocities.resize(5);
-//     for (size_t j = 0; j < 5; ++j)
-//     {
-//       jointCommandCM_.points[ind].velocities[j] = 0.0;
-//     }
-//     // To be reached 2 seconds after starting along the trajectory
-//     jointCommandCM_.points[ind].time_from_start = ros::Duration(3.0);
-
-// }
 
 
 void ManipulatorIK::desiredEEPosCallBack(const geometry_msgs::PoseStamped &msg) {

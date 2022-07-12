@@ -11,11 +11,11 @@
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
 	<!-- Joint State Publisher -->
-	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+	<!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
 		<rosparam param="source_list">["manipulator_planning/joint_states"]</rosparam>
-	</node>
+	</node> -->
 
-	<!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
+	<node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
 
 	<!-- rosparam -->
 	<rosparam file="$(find manipulator_planning)/config/manipulator_planning.yaml" command="load"/>

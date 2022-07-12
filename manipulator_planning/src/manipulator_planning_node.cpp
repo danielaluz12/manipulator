@@ -8,14 +8,16 @@ int main(int argc, char** argv)
 
 	manipulator_ik::ManipulatorIK robotIK(nodeHandle);
 
-	ros::Rate loop_rate(500);
-	while (ros::ok()) {
+	ros::spin();
 
-		robotIK.publishJointCommand();
+	// ros::Rate loop_rate(500);
+	// while (ros::ok()) {
 
-		ros::spinOnce();
-		loop_rate.sleep();
-	}
+	// 	robotIK.publishJointCommand();
+
+	// 	ros::spinOnce();
+	// 	loop_rate.sleep();
+	// }
 
 	return 0;
 }
