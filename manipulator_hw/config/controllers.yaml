@@ -1,5 +1,3 @@
-# #  ros_control_boilerplate Settings -----------------------
-# # Settings for ros_control control loop
 
 # generic_hw_control_loop:
 #   loop_hz: 200 # 250 to emulate serial pause COMMAND_PERIOD 0.0055 , SERIAL_PAUSE 0.004
@@ -54,22 +52,15 @@ arm_position_controller:
       i_clamp: 1.0
 
 
-# controller_list:
-#   - name: arm_position_controller
-#     action_ns: follow_joint_trajectory
-#     type: FollowJointTrajectory
-#     default: True
-#     joints:
-#       - joint_base_mancal
-#       - joint_mancal_link1
-#       - joint_link1_link2
-#       - joint_link2_link3
-#       - joint_link3_gripper
-#   - name: hand_position_controller
-#     action_ns: follow_joint_trajectory
-#     type: FollowJointTrajectory
-#     default: True
-#     joints:
-#       - gripper_left_finger
-#       - gripper_right_finger
+controller_list:
+  - name: arm_position_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - joint_base_mancal
+      - joint_mancal_link1
+      - joint_link1_link2
+      - joint_link2_link3
+      - joint_link3_gripper
 
