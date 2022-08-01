@@ -31,7 +31,7 @@ def config_camera():
 	print(out)
 
 	# Set 3D pose messages
-	ser.write("setpar markerlen 53\r".encode())
+	ser.write("setpar markerlen 51\r".encode())
 	out = ser.readline().rstrip()
 	print(out)
 
@@ -79,33 +79,33 @@ def euler_from_quaternion(x, y, z, w):
 
 	return roll_x, pitch_y, yaw_z # in radians
 
-def transferencia(posi):
-		tfl = TransformListener()
+# def transferencia(posi):
+# 		tfl = TransformListener()
     
-		to_link='base_link'
-		from_link='link_3'
+# 		to_link='base_link'
+# 		from_link='link_3'
 
 		
-		#rospy.sleep(5)
+# 		#rospy.sleep(5)
     
-		t = rospy.Time.now()
+# 		t = rospy.Time.now()
 
-		rospy.sleep(6)
+# 		rospy.sleep(6)
 
-		mpose_transf = None
+# 		mpose_transf = None
 
-		rospy.loginfo('Waiting for transform for some time...')
+# 		rospy.loginfo('Waiting for transform for some time...')
 
-		tfl.waitForTransform(to_link,from_link,t,rospy.Duration(5))
+# 		tfl.waitForTransform(to_link,from_link,t,rospy.Duration(5))
 
-		if tfl.canTransform(to_link,from_link,t):
+# 		if tfl.canTransform(to_link,from_link,t):
 
-			mpose_transf = tfl.transformPose(to_link,posi)
-			print (mpose_transf)
+# 			mpose_transf = tfl.transformPose(to_link,posi)
+# 			print (mpose_transf)
 
-		else:
-			rospy.logerr('Transformation is not possible!')
-			sys.exit(0)
+# 		else:
+# 			rospy.logerr('Transformation is not possible!')
+# 			sys.exit(0)
 
 
 def talker():
@@ -114,8 +114,8 @@ def talker():
 	rate = rospy.Rate(10) # 10hz
 	config_camera()
 
-	from_link = '/gripper'
-	to_link = '/base_link'
+	# from_link = '/gripper'
+	# to_link = '/base_link'
     
 	while not rospy.is_shutdown():
 		
@@ -125,7 +125,7 @@ def talker():
 		# Read a whole line and strip any trailing line ending character:
 		line = ser.readline().rstrip()
 		line= line.decode("utf-8") 
-		print ("received: {}".format(line))
+		# print ("received: {}".format(line))
 
 		# Split the line into tokens:
 		tok = line.split()
@@ -149,7 +149,8 @@ def talker():
 
 		#print(id)
 		#print(x)
-		print("Found ArUco {} at ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f})".format(id, float(x), float(y), float(z), float(q1), float(q2), float(q3), float(q4)))
+		# print("Found w,h,d ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f})".format(float(w), float(h), float(d), float(q1), float(q2), float(q3), float(q4)))
+		# print("Found ArUco {} at ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f})".format(id, float(x), float(y), float(z), float(q1), float(q2), float(q3), float(q4)))
 
 
 		goal= PoseStamped()
@@ -158,7 +159,7 @@ def talker():
 		#definir goal.header.stamp
 		goal.header.stamp = rospy.Time.now(); 
 		#definir goal.header.frame_id
-		goal.header.frame_id = '/gripper'
+		goal.header.frame_id = "camera"
 
 		goal.pose.position.x = float(x)
 		goal.pose.position.y = float(y)
@@ -171,7 +172,7 @@ def talker():
 
 
 		pub.publish(goal)
-		transferencia(goal)
+		# transferencia(goal)
 		rate.sleep()
 
 	

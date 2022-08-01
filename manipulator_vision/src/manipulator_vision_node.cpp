@@ -2,6 +2,10 @@
 #include <sensor_msgs/JointState.h>
 #include <std_srvs/Trigger.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <tf/transform_listener.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 
 #include "manipulator_vision/RequestEEPos.h"
 
@@ -10,6 +14,20 @@ geometry_msgs::PoseStamped ee2;
 geometry_msgs::PoseStamped ee3;
 
 ros::Publisher publish_ee_pos;
+ros::Subscriber JevoisTransform;
+tf::TransformListener listener;
+
+geometry_msgs::TransformStamped transformStamped;
+tf::Transform btTrans;
+
+tf::StampedTransform stampedTF;
+// static tf2_ros::TransformBroadcaster br;
+//tf2_ros::TransformBroadcaster tf_broadcaster;
+
+
+tf2_ros::Buffer tfBuffer;
+tf2_ros::TransformListener tfListener(tfBuffer);
+geometry_msgs::PoseStamped received_pose;
 
 void initPoseMessages () {
 
@@ -72,6 +90,16 @@ bool publishEEPos(manipulator_vision::RequestEEPos::Request  &req,
 	return true;
 }
 
+ void JevoisTransformCallBack(const geometry_msgs::PoseStamped &msg)
+ {
+
+	received_pose.header.stamp = msg.header.stamp;
+	received_pose.header.frame_id = msg.header.frame_id;
+	received_pose.pose = msg.pose;
+ }
+
+
+
 int main(int argc, char** argv)
 {
 	// Init ROS node
@@ -82,10 +110,43 @@ int main(int argc, char** argv)
 
 	ros::ServiceServer publishEEPosService_ = nodeHandle.advertiseService("request_ee_pos", publishEEPos);
 
+	JevoisTransform = nodeHandle.subscribe("/end_effector_jevois_pose", 100, &JevoisTransformCallBack);
+
+	ros::Publisher PoseTransPub = nodeHandle.advertise<geometry_msgs::PoseStamped>("/manipulator_vision/tf_ee_pos", 100);
+
 	publish_ee_pos = nodeHandle.advertise<geometry_msgs::PoseStamped>("/manipulator_vision/desired_ee_pos", 100);
 
 	ros::spin();
+	ros::Rate rate(10.0);
+	while (nodeHandle.ok()){
+       
+			try{
+				geometry_msgs::PoseStamped pose_transformed ;
+				transformStamped = tfBuffer.lookupTransform("base", "mancal",ros::Time(0));
+				tf2::doTransform(received_pose.pose,pose_transformed.pose,transformStamped);
+			}
+			catch (tf2::TransformException &ex) {
+				ROS_WARN("%s",ex.what());
+				ros::Duration(1.0).sleep();
+				continue;
+			}
 
+			
+
+			// pos_msg.pose.position.x = transformStamped.transform.translation.x;
+			// pos_msg.pose.position.y = transformStamped.transform.translation.y;
+			// pos_msg.pose.position.z = transformStamped.transform.translation.z;
+
+			// pos_msg.pose.orientation.x = transformStamped.transform.rotation.x;
+			// pos_msg.pose.orientation.y = transformStamped.transform.rotation.y;
+			// pos_msg.pose.orientation.z = transformStamped.transform.rotation.z;
+			// pos_msg.pose.orientation.w = transformStamped.transform.rotation.w;
+
+	
+      // PoseTransPub.publish(pos_msg);
+   
+			rate.sleep();
+     }
 //	ros::Rate loop_rate(500);
 //	while (ros::ok()) {
 //
