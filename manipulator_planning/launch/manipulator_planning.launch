@@ -17,7 +17,7 @@
 	<!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
 
 	<!-- Node for generating end-effector positions -->
-	<include file="$(find manipulator_vision)/launch/manipulator_vision.launch" />
+	<!-- <include file="$(find manipulator_vision)/launch/manipulator_vision.launch" /> -->
 
 	<!-- Node for computing inverse kinematics -->
 	<node name="manipulator_planning_node" pkg="manipulator_planning" type="manipulator_planning_node" output="screen"/>

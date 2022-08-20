@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1/Links1
+        - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 221
@@ -69,6 +70,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         ee_center:
           Alpha: 1
           Show Axes: false
@@ -122,30 +128,34 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_link:
-          Value: false
+          Value: true
+        camera:
+          Value: true
         ee_center:
           Value: true
         gripper:
-          Value: false
+          Value: true
         link_1:
-          Value: false
+          Value: true
         link_2:
-          Value: false
+          Value: true
         link_3:
-          Value: false
+          Value: true
         mancal_link:
-          Value: false
+          Value: true
         world:
-          Value: false
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
       Show Arrows: false
       Show Axes: false
-      Show Names: true
+      Show Names: false
       Tree:
         world:
           base_link:
+            camera:
+              {}
             mancal_link:
               link_1:
                 link_2:
@@ -183,7 +193,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.2070112228393555
+      Distance: 1.0960849523544312
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -199,9 +209,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6097973585128784
+      Pitch: 0.5747974514961243
       Target Frame: <Fixed Frame>
-      Yaw: 4.018559455871582
+      Yaw: 3.5335450172424316
     Saved: ~
 Window Geometry:
   Displays:

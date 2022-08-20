@@ -8,6 +8,13 @@ int main(int argc, char** argv)
 
 	manipulator_ik::ManipulatorIK robotIK(nodeHandle);
 
+	// robotIK.startTrajectory(robotIK.armExtensionTrajectory());
+
+	// while(!robotIK.getState().isDone() && ros::ok())
+	// {
+	// 	usleep(50000);
+	// }
+
 	ros::spin();
 
 	// ros::Rate loop_rate(500);

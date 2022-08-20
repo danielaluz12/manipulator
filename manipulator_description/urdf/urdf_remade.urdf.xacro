@@ -110,6 +110,29 @@
       effort="200"
       velocity="2" />
   </joint>
+
+  <link
+    name="camera">
+    <visual>
+      <geometry>
+        <box size= "0.012 0.012 0.012" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 0.098039 0.098039 1" />
+      </material>
+    </visual>
+  </link>  
+
+  <joint name="fixed_camera" type="fixed">
+      <origin
+      xyz="0.03 -0.03 0.071"
+      rpy="-1.57 0 0" />
+      <parent link="base_link" />
+      <child link="camera" />
+    </joint>
+
   <link
     name="link_1">
     <inertial>

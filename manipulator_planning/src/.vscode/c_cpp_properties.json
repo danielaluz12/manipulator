@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/daniela/Workspaces/arm_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/opt/openrobots/include/**",
+        "/home/daniela/Workspaces/arm_ws/src/manipulator/manipulator_hw/include/**",
+        "/home/daniela/Workspaces/arm_ws/src/manipulator/manipulator_planning/include/**",
+        "/home/daniela/Workspaces/arm_ws/src/serial/include/**",
+        "/home/daniela/Workspaces/arm_ws/src/trac_ik/trac_ik_lib/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

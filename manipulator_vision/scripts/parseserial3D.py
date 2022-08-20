@@ -21,7 +21,9 @@ def config_camera():
 	print(out)
 
 	# Initialize DemoArUco module
-	ser.write("setmapping2 YUYV 640 480 20.0 JeVois DemoArUco\r".encode())
+	# ser.write("setmapping2 YUYV 640 480 20.0 JeVois DemoArUco\r".encode())
+	ser.write("setmapping2 YUYV 320 240 30.0 JeVois DemoArUco\r".encode())
+	
 	out = ser.readline().rstrip()
 	print(out)
 
@@ -31,7 +33,7 @@ def config_camera():
 	print(out)
 
 	# Set 3D pose messages
-	ser.write("setpar markerlen 51\r".encode())
+	ser.write("setpar markerlen 5.1 \r".encode())
 	out = ser.readline().rstrip()
 	print(out)
 
@@ -64,9 +66,9 @@ def euler_from_quaternion(x, y, z, w):
 	pitch is rotation around y in radians (counterclockwise)
 	yaw is rotation around z in radians (counterclockwise)
 	"""
-	t0 = +2.0 * (w * x + y * z)
-	t1 = +1.0 - 2.0 * (x * x + y * y)
-	roll_x = math.atan2(t0, t1) * 180.0 / math.pi
+	t0 = +2.0 * (w * x + y * z)  
+	t1 = +1.0 - 2.0 * (x * x + y * y)  
+	roll_x = math.atan2(t0, t1) * 180.0 / math.pi  #sai em graus; conta em rad 
 
 	t2 = +2.0 * (w * y - z * x)
 	t2 = +1.0 if t2 > +1.0 else t2
@@ -143,14 +145,20 @@ def talker():
 		if len(tok) != 13: continue
 
 		# Assign some named Python variables to the tokens:
-		date, key, id, x, y, z, w, h, d, q1, q2, q3, q4 = tok
+		date,D, id, x, y, z, w, h, d, q1, q2, q3, q4 = tok
 
-		#roll, pitch, yaw = euler_from_quaternion(float(q1), float(q2), float(q3), float(q4))
+		norma= math.sqrt( (float(q1))**2 + (float(q2))**2+ (float(q3))**2 +(float(q4))**2)
+		n_q1= (float(q1))/ norma
+		n_q2= (float(q2))/ norma
+		n_q3= (float(q3))/ norma
+		n_q4= (float(q4))/ norma
+
+		roll, pitch, yaw = euler_from_quaternion(float(n_q1), float(n_q2), float(n_q3), float(n_q4))
 
 		#print(id)
 		#print(x)
 		# print("Found w,h,d ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f})".format(float(w), float(h), float(d), float(q1), float(q2), float(q3), float(q4)))
-		# print("Found ArUco {} at ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f})".format(id, float(x), float(y), float(z), float(q1), float(q2), float(q3), float(q4)))
+		print("Found ArUco {} at ({:.2f},{:.2f},{:.2f}) quaternions ({:.2f},{:.2f},{:.2f},{:.2f}) euler angles ({:.2f},{:.2f},{:.2f})".format(id, float(x), float(y), float(z), float(n_q1), float(n_q2), float(n_q3), float(n_q4),roll, pitch, yaw))
 
 
 		goal= PoseStamped()
@@ -159,16 +167,16 @@ def talker():
 		#definir goal.header.stamp
 		goal.header.stamp = rospy.Time.now(); 
 		#definir goal.header.frame_id
-		goal.header.frame_id = "camera"
+		goal.header.frame_id = '/camera'
 
 		goal.pose.position.x = float(x)
 		goal.pose.position.y = float(y)
 		goal.pose.position.z = float(z)
 
-		goal.pose.orientation.x = float(q1)
-		goal.pose.orientation.y = float(q2)
-		goal.pose.orientation.z = float(q3)
-		goal.pose.orientation.w = float(q4)
+		goal.pose.orientation.x =  float(n_q1)
+		goal.pose.orientation.y = float(n_q2)
+		goal.pose.orientation.z =float(n_q3)
+		goal.pose.orientation.w = float(n_q4)
 
 
 		pub.publish(goal)

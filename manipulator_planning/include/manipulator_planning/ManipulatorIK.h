@@ -10,6 +10,11 @@
 #include <sensor_msgs/JointState.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <trajectory_msgs/JointTrajectory.h>
+#include <pr2_controllers_msgs/JointTrajectoryAction.h>
+#include <actionlib/client/simple_action_client.h>
+
+// typedef actionlib::SimpleActionClient<pr2_controllers_msgs::JointTrajectoryAction>TrajClient;
+// TrajClient* traj_client_;
 
 namespace manipulator_ik {
 
@@ -19,9 +24,9 @@ class ManipulatorIK
 
 		// Constructor
 		ManipulatorIK (ros::NodeHandle& nh);
-
+		
 		// Destructor
-		~ManipulatorIK() = default;
+		~ManipulatorIK()=default;
 
 		// Compute the inverse kinematics
 		void findIKSolution(const KDL::Frame &end_effector_pose);
@@ -29,6 +34,12 @@ class ManipulatorIK
 		// Publish joint command
 		void publishJointCommand ();
 		// void convertCommandCM();
+
+		// Action client for the joint trajectory action 
+		// used to trigger the arm movement action
+		// pr2_controllers_msgs::JointTrajectoryGoal armExtensionTrajectory();
+		// void startTrajectory(pr2_controllers_msgs::JointTrajectoryGoal goal);
+		// actionlib::SimpleClientGoalState getState();
 
 	private:
 
