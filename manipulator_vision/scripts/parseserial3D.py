@@ -33,7 +33,7 @@ def config_camera():
 	print(out)
 
 	# Set 3D pose messages
-	ser.write("setpar markerlen 5.1 \r".encode())
+	ser.write("setpar markerlen 51 \r".encode())
 	out = ser.readline().rstrip()
 	print(out)
 
