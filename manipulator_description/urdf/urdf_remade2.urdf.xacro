@@ -5,13 +5,13 @@
 <robot
   name="urdf_remade">
   
- <link name="world" />
+  <link name="world" />
 
   <joint name="fixed_base" type="fixed">
         <parent link="world" />
         <child link="base_link" />
- </joint>  
-  
+    </joint>
+
   <link
     name="base_link">
     <inertial>
@@ -22,10 +22,10 @@
         value="0.18873" />
       <inertia
         ixx="0.00025902"
-        ixy="0.0"
-        ixz="0.0"
+        ixy="0.00017171"
+        ixz="-0.00013068"
         iyy="0.00025783"
-        iyz="0.0"
+        iyz="0.00087758"
         izz="0.00039006" />
     </inertial>
     <visual>
@@ -56,17 +56,17 @@
     name="mancal_link">
     <inertial>
       <origin
-        xyz="-0.010388 -0.00055538 0.012328"
+        xyz="0.0082382 -0.0063516 0.012328"
         rpy="0 0 0" />
       <mass
         value="0.0822" />
       <inertia
-        ixx="7.301E-05"
-        ixy="0"
-        ixz="1.105E-05"
-        iyy="6.8036E-05"
-        iyz="0"
-        izz="7.0545E-05" />
+        ixx="0.00071159"
+        ixy="-0.00024189"
+        ixz="-0.00087636"
+        iyy="0.00069887"
+        iyz="0.00067566"
+        izz="0.00070545" />
     </inertial>
     <visual>
       <origin
@@ -96,7 +96,7 @@
     name="joint_base_mancal"
     type="revolute">
     <origin
-      xyz="-0.003036 -0.0007769 0.065"
+      xyz="0.0017893 -0.0022034 0.065"
       rpy="0 0 -3.1273" />
     <parent
       link="base_link" />
@@ -110,7 +110,7 @@
       effort="200"
       velocity="2" />
   </joint>
-  
+
   <link
     name="camera">
     <visual>
@@ -123,32 +123,31 @@
           rgba="1.0 0.098039 0.098039 1" />
       </material>
     </visual>
-  </link> 
-  
+  </link>  
+
   <joint name="fixed_camera" type="fixed">
       <origin
       xyz="0.03 -0.03 0.071"
-      rpy="-1.57 0 0" />
+      rpy="-1.57 0 -0.785" />
       <parent link="base_link" />
       <child link="camera" />
     </joint>
-  
-  
+
   <link
     name="link_1">
     <inertial>
       <origin
-        xyz="-0.0066627 0.016504 0.032099"
+        xyz="-0.12225 0.002316 0.023263"
         rpy="0 0 0" />
       <mass
-        value="0.088001" />
+        value="0.37066" />
       <inertia
-        ixx="0.00010722"
-        ixy="0"
-        ixz="0"
-        iyy="8.2655E-05"
-        iyz="-3.1716E-05"
-        izz="3.8387E-05" />
+        ixx="0.00017655"
+        ixy="0.00014663"
+        ixz="0.00036049"
+        iyy="0.0021231"
+        iyz="-0.00027903"
+        izz="0.0020023" />
     </inertial>
     <visual>
       <origin
@@ -178,16 +177,16 @@
     name="joint_mancal_link1"
     type="revolute">
     <origin
-      xyz="-0.003678 -0.00019665 0.0398"
-      rpy="1.5708 0 3.1416" />
+      xyz="-0.0018347 0.0014146 0.0398"
+      rpy="0 0 0.914" />
     <parent
       link="mancal_link" />
     <child
       link="link_1" />
     <axis
-      xyz="-0.99857 0 0.05339" />
+      xyz="0 1 0" />
     <limit
-      lower="-0.6"
+      lower="-0.08"
       upper="2.8"
       effort="200"
       velocity="2" />
@@ -196,17 +195,17 @@
     name="link_2">
     <inertial>
       <origin
-        xyz="0.0025349 0.0042401 0.030954"
+        xyz="-0.078673 -0.023987 0.014926"
         rpy="0 0 0" />
       <mass
-        value="0.063942" />
+        value="0.20121" />
       <inertia
-        ixx="7.2748E-05"
-        ixy="0"
-        ixz="0"
-        iyy="6.4149E-05"
-        iyz="0"
-        izz="1.5532E-05" />
+        ixx="7.6875E-05"
+        ixy="-0.00018666"
+        ixz="0.00097421"
+        iyy="0.00062739"
+        iyz="0.00035413"
+        izz="0.0005719" />
     </inertial>
     <visual>
       <origin
@@ -236,14 +235,14 @@
     name="joint_link1_link2"
     type="revolute">
     <origin
-      xyz="0.020288 0.032426 0.06104"
+      xyz="-0.24449 0 0.046524"
       rpy="0 0 0" />
     <parent
       link="link_1" />
     <child
       link="link_2" />
     <axis
-      xyz="0.99857 0 -0.05339" />
+      xyz="0 1 0" />
     <limit
       lower="-1.39"
       upper="1.39"
@@ -254,17 +253,17 @@
     name="link_3">
     <inertial>
       <origin
-        xyz="0.0094208 -0.050153 -0.0070327"
+        xyz="-0.043002 -0.0092993 0.012483"
         rpy="0 0 0" />
       <mass
-        value="0.045768" />
+        value="0.1114" />
       <inertia
-        ixx="3.5923E-05"
-        ixy="0"
-        ixz="0"
-        iyy="8.3464E-06"
-        iyz="-6.3847E-06"
-        izz="3.5907E-05" />
+        ixx="4.6736E-05"
+        ixy="-0.00031676"
+        ixz="0.00024917"
+        iyy="0.00013144"
+        iyz="0.00010543"
+        izz="0.00010147" />
     </inertial>
     <visual>
       <origin
@@ -294,17 +293,17 @@
     name="joint_link2_link3"
     type="revolute">
     <origin
-      xyz="-0.023788 0.0081191 0.060805"
+      xyz="-0.15734 0.013 0.02985"
       rpy="0 0 0" />
     <parent
       link="link_2" />
     <child
       link="link_3" />
     <axis
-      xyz="-0.99857 0 0.05339" />
+      xyz="0 -1 0" />
     <limit
-      lower="0.0"
-      upper="3.14"
+      lower="-1.57"
+      upper="1.57"
       effort="200"
       velocity="2" />
   </joint>
@@ -312,17 +311,17 @@
     name="gripper">
     <inertial>
       <origin
-        xyz="-0.0012692 -0.033167 -0.0082879"
+        xyz="-0.020033 0.0039871 0.010471"
         rpy="0 0 0" />
       <mass
-        value="0.0083659" />
+        value="0.014246" />
       <inertia
-        ixx="3.2512E-06"
-        ixy="-2.4515E-07"
-        ixz="0"
-        iyy="2.4095E-07"
-        iyz="1.9333E-07"
-        izz="3.2152E-06" />
+        ixx="0.00045598"
+        ixy="0.00068889"
+        ixz="0.00035533"
+        iyy="0.00088054"
+        iyz="-0.00094032"
+        izz="0.00050149" />
     </inertial>
     <visual>
       <origin
@@ -352,30 +351,28 @@
     name="joint_link3_gripper"
     type="revolute">
     <origin
-      xyz="-0.025813 -0.086641 0.00061911"
-      rpy="0 0 0" />
+      xyz="-0.079874 -0.010002 0.014725"
+      rpy="1.5708 0 -0.914" />
     <parent
       link="link_3" />
     <child
       link="gripper" />
     <axis
-      xyz="-0.053389 -0.0039362 -0.99857" />
+      xyz="0.17293 0.95905 -0.2243" />
     <limit
       lower="-0.35"
       upper="0.35"
       effort="200"
-      velocity="2" />     
+      velocity="2" />
   </joint>
-  
+
   <link name="ee_center" />
 
    <joint
     name="joint_gripper_ee_center"
     type="fixed">
-    <origin xyz="0.022 -0.050 -0.01" rpy="1.57 0 0" />
+    <origin xyz="-0.06 0 0.03" rpy="0 0 0" />
     <parent link="gripper" />
     <child link="ee_center" />
   </joint>
-
-  
 </robot>

@@ -9,6 +9,7 @@ project(manipulator_vision)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   # serial
+  gazebo_ros
   tf
   tf2
   tf2_ros
@@ -40,7 +41,7 @@ generate_messages(
 catkin_package(
   #INCLUDE_DIRS include
 #  LIBRARIES subscriber_python
-  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs gazebo_ros
 #  DEPENDS system_lib
 )
 

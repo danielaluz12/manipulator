@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <launch>
 
-	<node name="manipulator_vision_node_2" pkg="manipulator_vision" type="manipulator_vision_node_2" output="screen"/>
+	<!-- <node name="manipulator_vision_node_2" pkg="manipulator_vision" type="manipulator_vision_node_2" output="screen"/> -->
 
 	<!-- <node name="manipulator_vision_trans" pkg="manipulator_vision" type="manipulator_vision_trans" output="screen"/> -->
 
-	<node name="parseserial3D" pkg="manipulator_vision" type="parseserial3D.py" output="screen"/>
+	<!-- <node name="parseserial3D" pkg="manipulator_vision" type="parseserial3D.py" output="screen"/> -->
 
 	<!-- RViz -->
+	
 	<node name="rviz"  pkg="rviz" type="rviz" args="-d $(find manipulator_planning)/rviz/config.rviz" required="true" />
- 
+
 </launch>

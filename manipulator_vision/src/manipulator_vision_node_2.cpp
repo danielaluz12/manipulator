@@ -11,9 +11,11 @@
 
 ros::Subscriber PoseSubs;
 ros::Publisher TransPosePub;
-geometry_msgs::PoseStamped pose_out;
 visualization_msgs::Marker pointMarker_;
 ros::Publisher pointMarkerPublisher_;
+
+geometry_msgs::PoseStamped objectPoseInBaseFrame;
+geometry_msgs::PoseStamped objectPoseInCameraFrame;
 
 
 visualization_msgs::Marker getSphereMarker(const std::string& frame_id, const std::string& ns, const int id, const double scale, const float red, const float green, const float blue, const float a){
@@ -44,9 +46,9 @@ visualization_msgs::Marker getSphereMarker(const std::string& frame_id, const st
 
 void publishMarker() {
 
-	pointMarker_.pose.position.x = pose_out.pose.position.x/1000;
-	pointMarker_.pose.position.y = pose_out.pose.position.y/1000;
-	pointMarker_.pose.position.z = pose_out.pose.position.z/1000;
+	pointMarker_.pose.position.x = objectPoseInBaseFrame.pose.position.x;
+	pointMarker_.pose.position.y = objectPoseInBaseFrame.pose.position.y;
+	pointMarker_.pose.position.z = objectPoseInBaseFrame.pose.position.z;
 		
 	pointMarkerPublisher_.publish(pointMarker_);
 }
@@ -55,16 +57,27 @@ void publishMarker() {
 //  Callback 
 void PoseCallBack(const geometry_msgs::PoseStamped& pose_in)
 {
-	
+	objectPoseInCameraFrame.header.frame_id = "/camera";
+	objectPoseInCameraFrame.header.stamp = ros::Time::now();
+	objectPoseInCameraFrame.pose.position.x = pose_in.pose.position.x/1000;
+	objectPoseInCameraFrame.pose.position.y = pose_in.pose.position.y/1000;
+	objectPoseInCameraFrame.pose.position.z = pose_in.pose.position.z/1000;
+
+	objectPoseInCameraFrame.pose.orientation.x = pose_in.pose.orientation.x;
+	objectPoseInCameraFrame.pose.orientation.y = pose_in.pose.orientation.y;
+	objectPoseInCameraFrame.pose.orientation.z = pose_in.pose.orientation.z;
+	objectPoseInCameraFrame.pose.orientation.w = pose_in.pose.orientation.w;
+
+
+}
+
+void transformAndPusblishObjectPose () {
+
 	static tf::TransformBroadcaster br;
-	tf::Transform o_transform_c;
-	tf::Transform o_transform_b;
-	tf::Quaternion cameraOrientobj;
-	tf::Quaternion baseOrientobj;
-
-
-
-	// geometry_msgs::PoseStamped pose_out;
+	tf::Transform transformCameraToObject;
+	tf::Transform transformBaseToObject;
+	tf::Quaternion objectOrientationInCameraFrame;
+	tf::Quaternion objectOrientationInBaseFrame;
 
 	try 
 	{
@@ -73,58 +86,51 @@ void PoseCallBack(const geometry_msgs::PoseStamped& pose_in)
 
 
 		tf_.waitForTransform("/base_link","/camera", ros::Time(), ros::Duration(5.0));
-		tf_.transformPose(target_frame_,pose_in, pose_out);
-
-
-
-		pose_out.pose.position.x = pose_out.pose.position.x/1000;
-		pose_out.pose.position.y = pose_out.pose.position.y/1000;
-		pose_out.pose.position.z = pose_out.pose.position.z/1000;
-		
-
-		// pose_out.pose.orientation.x=0.0;
-		// pose_out.pose.orientation.y=0.0;
-		// pose_out.pose.orientation.z =0.0;
-		// pose_out.pose.orientation.w =1.0;
-
-
-		cameraOrientobj.setX(pose_in.pose.orientation.x);
-    cameraOrientobj.setY(pose_in.pose.orientation.y);
-    cameraOrientobj.setZ(pose_in.pose.orientation.z);
-    cameraOrientobj.setW(pose_in.pose.orientation.w);
-
-		tf::Vector3 positionCameraToObject(pose_in.pose.position.x/1000, pose_in.pose.position.y/1000,pose_in.pose.position.z/1000);
-
-
-		
-		baseOrientobj.setX(pose_out.pose.orientation.x);
-    baseOrientobj.setY(pose_out.pose.orientation.y);
-    baseOrientobj.setZ(pose_out.pose.orientation.z);
-    baseOrientobj.setW(pose_out.pose.orientation.w);
-
-		tf::Vector3 positionBaseToObject(pose_out.pose.position.x, pose_out.pose.position.y,pose_out.pose.position.z);
-
-		o_transform_c.setRotation(cameraOrientobj);
-    o_transform_c.setOrigin(positionCameraToObject);
-    br.sendTransform(tf::StampedTransform(o_transform_c, ros::Time::now(), "camera", "object1" ));
-
-
-		o_transform_b.setRotation(baseOrientobj);
-    o_transform_b.setOrigin(positionBaseToObject);
-    br.sendTransform(tf::StampedTransform(o_transform_b, ros::Time::now(), "base_link", "object2" ));
-
-		TransPosePub.publish(pose_out);
-
-	  publishMarker();
-
-
+		tf_.transformPose(target_frame_, objectPoseInCameraFrame, objectPoseInBaseFrame);
 	}
 	catch (tf2::TransformException &ex) 
 	{
 		ROS_WARN("Failure %s\n", ex.what()); //Print exception which was caught
 	}
-}
 
+		// object in camera frame
+		objectOrientationInCameraFrame.setX(objectPoseInCameraFrame.pose.orientation.x);
+    objectOrientationInCameraFrame.setY(objectPoseInCameraFrame.pose.orientation.y);
+    objectOrientationInCameraFrame.setZ(objectPoseInCameraFrame.pose.orientation.z);
+    objectOrientationInCameraFrame.setW(objectPoseInCameraFrame.pose.orientation.w);
+
+		tf::Vector3 positionCameraToObject(objectPoseInCameraFrame.pose.position.x,
+																			 objectPoseInCameraFrame.pose.position.y,
+																			 objectPoseInCameraFrame.pose.position.z);
+
+		transformCameraToObject.setRotation(objectOrientationInCameraFrame);
+    transformCameraToObject.setOrigin(positionCameraToObject);
+    br.sendTransform(tf::StampedTransform(transformCameraToObject, ros::Time::now(), "camera", "object1" ));
+
+		objectPoseInBaseFrame.pose.orientation.x = 0;
+		objectPoseInBaseFrame.pose.orientation.y = 0;
+		objectPoseInBaseFrame.pose.orientation.z = 0;
+		objectPoseInBaseFrame.pose.orientation.w = 1;
+
+		// object in base frame
+		objectOrientationInBaseFrame.setX(objectPoseInBaseFrame.pose.orientation.x);
+    objectOrientationInBaseFrame.setY(objectPoseInBaseFrame.pose.orientation.y);
+    objectOrientationInBaseFrame.setZ(objectPoseInBaseFrame.pose.orientation.z);
+    objectOrientationInBaseFrame.setW(objectPoseInBaseFrame.pose.orientation.w);
+
+		tf::Vector3 positionBaseToObject(objectPoseInBaseFrame.pose.position.x, 
+																		 objectPoseInBaseFrame.pose.position.y,
+																		 objectPoseInBaseFrame.pose.position.z);
+
+		transformBaseToObject.setRotation(objectOrientationInBaseFrame);
+    transformBaseToObject.setOrigin(positionBaseToObject);
+    br.sendTransform(tf::StampedTransform(transformBaseToObject, ros::Time::now(), "base_link", "object2" ));
+
+		objectPoseInBaseFrame.header.stamp = ros::Time::now();
+		TransPosePub.publish(objectPoseInBaseFrame);
+
+	  publishMarker();
+}
 
 int main(int argc, char ** argv)
 {
@@ -136,6 +142,16 @@ int main(int argc, char ** argv)
 	// PoseDrawer pd; //Construct class
 	pointMarker_ = getSphereMarker ("base_link","gripper_pos", 0, 0.02, 1.0, 0.8, 0.4, 1.0);
 	pointMarkerPublisher_ = n_.advertise<visualization_msgs::Marker>("/manipulator_planning/gripper_position_vis", 10);
-	ros::spin(); // Run until interupted 
+	
+	ros::Rate loop_rate(150);
+
+	while (ros::ok()) {
+
+		transformAndPusblishObjectPose();
+		ros::spinOnce();
+		loop_rate.sleep();
+	}
+
+	
 	return 0;
 };

@@ -113,7 +113,7 @@ def euler_from_quaternion(x, y, z, w):
 def talker():
 	pub = rospy.Publisher('/end_effector_jevois_pose', PoseStamped, queue_size=10)
 	rospy.init_node('jevois_pose', anonymous=True)
-	rate = rospy.Rate(10) # 10hz
+	rate = rospy.Rate(150) # 10hz
 	config_camera()
 
 	# from_link = '/gripper'

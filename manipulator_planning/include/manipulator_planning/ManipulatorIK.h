@@ -58,6 +58,7 @@ class ManipulatorIK
 		// Publishs joint command from the inverse kinematics
 		sensor_msgs::JointState jointCommand_;
 		trajectory_msgs::JointTrajectory jointCommandCM_;
+		trajectory_msgs::JointTrajectory lastPosition_;
 
 		ros::Publisher jointCommandPublisher_;
 		ros::Publisher jointCommandCMPublisher_;

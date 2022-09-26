@@ -4,13 +4,13 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="urdf_remade">
-  
- <link name="world" />
+ 
+ 	<link name="world" />
 
   <joint name="fixed_base" type="fixed">
         <parent link="world" />
         <child link="base_link" />
- </joint>  
+    </joint>
   
   <link
     name="base_link">
@@ -22,10 +22,10 @@
         value="0.18873" />
       <inertia
         ixx="0.00025902"
-        ixy="0.0"
-        ixz="0.0"
+        ixy="0"
+        ixz="0"
         iyy="0.00025783"
-        iyz="0.0"
+        iyz="0"
         izz="0.00039006" />
     </inertial>
     <visual>
@@ -39,7 +39,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -52,19 +52,20 @@
       </geometry>
     </collision>
   </link>
+  
   <link
     name="mancal_link">
     <inertial>
       <origin
-        xyz="-0.010388 -0.00055538 0.012328"
+        xyz="-0.010397 -0.00033628 0.012328"
         rpy="0 0 0" />
       <mass
         value="0.0822" />
       <inertia
-        ixx="7.301E-05"
+        ixx="7.3019E-05"
         ixy="0"
-        ixz="1.105E-05"
-        iyy="6.8036E-05"
+        ixz="1.106E-05"
+        iyy="6.8027E-05"
         iyz="0"
         izz="7.0545E-05" />
     </inertial>
@@ -79,7 +80,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -96,7 +97,7 @@
     name="joint_base_mancal"
     type="revolute">
     <origin
-      xyz="-0.003036 -0.0007769 0.065"
+      xyz="-0.0030392 -0.00072042 0.065"
       rpy="0 0 -3.1273" />
     <parent
       link="base_link" />
@@ -133,22 +134,21 @@
       <child link="camera" />
     </joint>
   
-  
   <link
     name="link_1">
     <inertial>
       <origin
-        xyz="-0.0066627 0.016504 0.032099"
+        xyz="-0.007213 -0.0035323 0.035814"
         rpy="0 0 0" />
       <mass
         value="0.088001" />
       <inertia
-        ixx="0.00010722"
+        ixx="0.00010734"
         ixy="0"
         ixz="0"
-        iyy="8.2655E-05"
-        iyz="-3.1716E-05"
-        izz="3.8387E-05" />
+        iyy="9.8432E-05"
+        iyz="0"
+        izz="2.2487E-05" />
     </inertial>
     <visual>
       <origin
@@ -161,7 +161,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -178,16 +178,16 @@
     name="joint_mancal_link1"
     type="revolute">
     <origin
-      xyz="-0.003678 -0.00019665 0.0398"
+      xyz="-0.0036813 -0.00011907 0.0398"
       rpy="1.5708 0 3.1416" />
     <parent
       link="mancal_link" />
     <child
       link="link_1" />
     <axis
-      xyz="-0.99857 0 0.05339" />
+      xyz="-0.99948 0 0.032327" />
     <limit
-      lower="-0.6"
+      lower="-0.08"
       upper="2.8"
       effort="200"
       velocity="2" />
@@ -196,17 +196,17 @@
     name="link_2">
     <inertial>
       <origin
-        xyz="0.0025349 0.0042401 0.030954"
+        xyz="0.0018709 -0.0062333 0.030663"
         rpy="0 0 0" />
       <mass
         value="0.063942" />
       <inertia
-        ixx="7.2748E-05"
+        ixx="7.284E-05"
         ixy="0"
         ixz="0"
-        iyy="6.4149E-05"
+        iyy="6.3073E-05"
         iyz="0"
-        izz="1.5532E-05" />
+        izz="1.6517E-05" />
     </inertial>
     <visual>
       <origin
@@ -219,7 +219,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -236,14 +236,14 @@
     name="joint_link1_link2"
     type="revolute">
     <origin
-      xyz="0.020288 0.032426 0.06104"
+      xyz="0.019243 -0.006808 0.069082"
       rpy="0 0 0" />
     <parent
       link="link_1" />
     <child
       link="link_2" />
     <axis
-      xyz="0.99857 0 -0.05339" />
+      xyz="0.99948 0 -0.032327" />
     <limit
       lower="-1.39"
       upper="1.39"
@@ -254,17 +254,17 @@
     name="link_3">
     <inertial>
       <origin
-        xyz="0.0094208 -0.050153 -0.0070327"
+        xyz="-0.0066835 -0.042699 0.044103"
         rpy="0 0 0" />
       <mass
-        value="0.045768" />
+        value="0.054134" />
       <inertia
-        ixx="3.5923E-05"
+        ixx="3.9068E-05"
         ixy="0"
         ixz="0"
-        iyy="8.3464E-06"
-        iyz="-6.3847E-06"
-        izz="3.5907E-05" />
+        iyy="2.1688E-05"
+        iyz="1.6276E-05"
+        izz="2.6129E-05" />
     </inertial>
     <visual>
       <origin
@@ -277,7 +277,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -294,17 +294,17 @@
     name="joint_link2_link3"
     type="revolute">
     <origin
-      xyz="-0.023788 0.0081191 0.060805"
+      xyz="-0.013691 -0.011936 0.059274"
       rpy="0 0 0" />
     <parent
       link="link_2" />
     <child
       link="link_3" />
     <axis
-      xyz="-0.99857 0 0.05339" />
+      xyz="-0.99948 0 0.032327" />
     <limit
-      lower="0.0"
-      upper="3.14"
+      lower="-1.57"
+      upper="1.57"
       effort="200"
       velocity="2" />
   </joint>
@@ -312,17 +312,17 @@
     name="gripper">
     <inertial>
       <origin
-        xyz="-0.0012692 -0.033167 -0.0082879"
+        xyz="0.01442 -0.0023726 0.0063946"
         rpy="0 0 0" />
       <mass
-        value="0.0083659" />
+        value="0.054134" />
       <inertia
-        ixx="3.2512E-06"
-        ixy="-2.4515E-07"
+        ixx="3.9068E-05"
+        ixy="0"
         ixz="0"
-        iyy="2.4095E-07"
-        iyz="1.9333E-07"
-        izz="3.2152E-06" />
+        iyy="2.1688E-05"
+        iyz="-1.6276E-05"
+        izz="2.6129E-05" />
     </inertial>
     <visual>
       <origin
@@ -335,7 +335,7 @@
       <material
         name="">
         <color
-          rgba="0.098039 0.098039 0.098039 1" />
+          rgba="0.098039 0.098039 0.098039 1"  />
       </material>
     </visual>
     <collision>
@@ -347,35 +347,37 @@
           filename="package://manipulator_description/meshes/gripper.STL" />
       </geometry>
     </collision>
-  </link>
-  <joint
+  </link> 
+
+   <joint
     name="joint_link3_gripper"
-    type="revolute">
+    type="fixed">
     <origin
-      xyz="-0.025813 -0.086641 0.00061911"
-      rpy="0 0 0" />
+      xyz="0.0077365 -0.040327 0.050497"
+      rpy="3.1416 0 3.1416" />
     <parent
       link="link_3" />
     <child
       link="gripper" />
     <axis
-      xyz="-0.053389 -0.0039362 -0.99857" />
+      xyz="0.019686 -0.79321 0.60863" />
     <limit
       lower="-0.35"
       upper="0.35"
       effort="200"
-      velocity="2" />     
+      velocity="2" />
   </joint>
-  
+   
+
   <link name="ee_center" />
 
    <joint
     name="joint_gripper_ee_center"
     type="fixed">
-    <origin xyz="0.022 -0.050 -0.01" rpy="1.57 0 0" />
-    <parent link="gripper" />
+    <origin xyz="-0.01 -0.09 0.095" rpy="0.74 0 0" />
+    <parent link="link_3" />
     <child link="ee_center" />
   </joint>
 
-  
+
 </robot>

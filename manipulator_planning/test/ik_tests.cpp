@@ -190,8 +190,8 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "trac_ik_test");
 
   ros::NodeHandle nodeHandle;
-  ros::Subscriber subscriber = nodeHandle.subscribe("end_effector_jevois_pose", 1, callBack);
-  
+  // ros::Subscriber subscriber = nodeHandle.subscribe("end_effector_jevois_pose", 1, callBack);
+  ros::Subscriber subscriber = nodeHandle.subscribe("/manipulator_vision/transformed_pose", 1, callBack);
   
   jointCommandPublisher = nodeHandle.advertise<sensor_msgs::JointState>("end_effector_command_solution", 1);
   pointMarkerPublisher = nodeHandle.advertise<visualization_msgs::Marker>("gripper_position_vis", 1);

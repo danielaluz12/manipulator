@@ -14,10 +14,13 @@ hardware_interface:
   
 joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 500
+    allow_partial_joints_goal: true
+    publish_rate: 100
+    allow_partial_joints_goal: true
 
 arm_position_controller:
   type: position_controllers/JointTrajectoryController
+  allow_partial_joints_goal: true
   joints:
     - joint_base_mancal
     - joint_mancal_link1
@@ -50,10 +53,11 @@ arm_position_controller:
       d: 10000.0
       i: 0.0
       i_clamp: 1.0
-
+  
 
 controller_list:
   - name: arm_position_controller
+    allow_partial_joints_goal: true
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: True
@@ -63,4 +67,5 @@ controller_list:
       - joint_link1_link2
       - joint_link2_link3
       - joint_link3_gripper
+    
 

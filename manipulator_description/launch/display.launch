@@ -1,9 +1,8 @@
 <launch>
-  <arg
-    name="model" />
-  <param
-    name="robot_description"
-    textfile="$(find manipulator_description)/urdf/urdf_remade.urdf" />
+   <!-- Run xacro script to generate and upload BlackArm description -->  
+  <param name="robot_description" command="$(find xacro)/xacro
+     $(find manipulator_description)/urdf/urdf_remade.urdf.xacro"/>
+
   <node
     name="joint_state_publisher_gui"
     pkg="joint_state_publisher_gui"
@@ -12,9 +11,11 @@
     name="robot_state_publisher"
     pkg="robot_state_publisher"
     type="robot_state_publisher" />
-  <node
+
+    <node
     name="rviz"
     pkg="rviz"
     type="rviz"
     args="-d $(find manipulator_description)/urdf.rviz" />
+  
 </launch>
