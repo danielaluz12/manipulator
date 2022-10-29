@@ -30,6 +30,8 @@ In the  folder manipulator_hw is a hardware interface used to control the robot 
 
 In the folder CAD are the editable files of the robot design in Solid Works.
 
+In the folder Matlab are the script and workspace used for the plots and Peter Corke simulations.
+
 All the items used for control and to move the arm can be seen below:
 
 ![setup](https://user-images.githubusercontent.com/71453516/198848646-47bd594a-1282-4d67-90a6-16dbd1ff2b93.png)
