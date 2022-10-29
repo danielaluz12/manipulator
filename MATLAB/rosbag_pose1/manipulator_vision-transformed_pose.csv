@@ -1,0 +1,4 @@
+Time,header.seq,header.stamp.secs,header.stamp.nsecs,header.frame_id,pose.position.x,pose.position.y,pose.position.z,pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w
+1662234704.5149045,2,0,0,,-0.0485434,0.254636,0.0717118,-0.700888,-0.126777,0.166063,0.681988
+1662234710.3427145,2,0,0,,-0.0485434,0.254636,0.0717118,-0.700888,-0.126777,0.166063,0.681988
+1662234714.8601153,2,0,0,,-0.0485434,0.254636,0.0717118,-0.700888,-0.126777,0.166063,0.681988
