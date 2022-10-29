@@ -19,7 +19,7 @@ In the folder CAD are the editable files of the robot design in Solid Works.
 
 All the items used for control and to move the arm can be seen below:
 
-![pwm_raspberry](https://user-images.githubusercontent.com/71453516/198848591-f38bfdb6-f24c-4678-9b46-ed2d8a65332b.jpg)
+![setup](https://user-images.githubusercontent.com/71453516/198848646-47bd594a-1282-4d67-90a6-16dbd1ff2b93.png)
 
 raspberry(1), PWM Driver(2) e servos(3)
 
