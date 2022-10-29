@@ -1,4 +1,12 @@
 # Robotic Manipulator for Educational Purposes
+
+Repo for graduation monography on Mechatronics Engineering- Student: Daniela Ramos Luz - December of 2022
+
+**Project:** Low-cost manipulator that can be integrated in mobile robots and can be used for robotics studies
+
+
+## 1. ROBOT
+
 The robot can be seen in Rviz:
 
 ![pose3_end_rviz](https://user-images.githubusercontent.com/71453516/198848489-23eef356-f268-4bc0-80fc-f1034f7dbbed.png)
@@ -6,6 +14,11 @@ The robot can be seen in Rviz:
 And here where it is actually built:
 
 ![pose3_real_end](https://user-images.githubusercontent.com/71453516/198848527-6832e4d2-73eb-4607-a53f-abb904a4dd80.png)
+
+
+
+## 2. MATERIALS, METHODS AND ROS CODES
+
 
 In the folder description are the mesh files and urdf file for robot description.
 
