@@ -2,7 +2,7 @@
 
 Repo for graduation monography on Mechatronics Engineering- Student: Daniela Ramos Luz - December of 2022
 
-**Project:** Low-cost manipulator that can be integrated in mobile robots and can be used for robotics studies
+**Project:** Low-cost 4 DOF manipulator that can be integrated in mobile robots and can be used for robotics studies
 
 
 ## 1. ROBOT
